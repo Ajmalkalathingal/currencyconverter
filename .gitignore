@@ -1,2 +1,36 @@
-/.env
+# Ignore Python compiled files
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Ignore Virtual Environment
+venv/
+env/
+
+# Ignore IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore pytest cache
+.pytest_cache/
+.cache/
+
+# Ignore environment variables and secrets
 .env
+.env.local
+.env.development
+.env.production
+
+# Ignore log and temporary files
+*.log
+*.bak
+*.tmp
+
+# Ignore Django migrations (optional, but useful in some cases)
+**/migrations/*
+
+# Ignore coverage reports
+htmlcov/
+.coverage
