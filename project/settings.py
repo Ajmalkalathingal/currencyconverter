@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+from dotenv import load_dotenv
 
 
 # Quick-start development settings - unsuitable for production
@@ -125,6 +127,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-OPEN_EXCHANGE_API_KEY = '3ac93ed544274697935adca92cdb8761'
+OPEN_EXCHANGE_API_KEY = os.getenv("OPEN_EXCHANGE_API_KEY")
 
 # OPEN_EXCHANGE_API_KEY = '0793a827a006a5a121f1ab0b5e2a6348'
