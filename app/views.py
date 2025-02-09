@@ -30,4 +30,40 @@ def get_exchange_rates(request):
 
 
 
+# Convert amount from one currency to another
+@api_view(["POST"])
+def convert_currency(request):
+    from_currency = request.data.get("from", "USD")  # Default: USD
+    to_currency = request.data.get("to")
+    amount = float(request.data.get("amount", 0))
+
+    if not to_currency or amount <= 0:
+        return Response({"error": "Invalid request parameters"}, status=400)
+
+    params = {
+        "app_id": settings.OPEN_EXCHANGE_API_KEY,
+        "base": from_currency
+    }
+
+    try:
+        response = requests.get(EXCHANGE_API_URL, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        rates = data.get("rates", {})
+        conversion_rate = rates.get(to_currency)
+
+        if not conversion_rate:
+            return Response({"error": "Invalid target currency"}, status=400)
+
+        converted_amount = amount * conversion_rate
+        return Response({
+            "from_currency": from_currency,
+            "to_currency": to_currency,
+            "amount": amount,
+            "converted_amount": round(converted_amount, 2)
+        })
+
+    except requests.exceptions.RequestException as e:
+        return Response({"error": str(e)}, status=500)
 
